@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machawi 5 Étoile - قائمة الطعام</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-red: #e63946;
+            --primary-black: #1d1d1d;
+            --primary-orange: #ff9500;
+            --dark-bg: #121212;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --text-light: #f1f1f1;
+            --text-muted: #aaaaaa;
+            --border-glow: rgba(255, 149, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--primary-orange);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-red);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--primary-red);
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        /* Layout */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        section {
+            padding: 4rem 0;
+            scroll-margin-top: 80px;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(0, 0, 0, 0.9);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 120px;        
+            margin-left: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--primary-orange);
+        }
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-right: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: var(--primary-orange);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-red);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('main.png') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-red);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-orange);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Menu Section */
+        .menu-section {
+            background-color: var(--dark-bg);
+        }
+
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .category-btn {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--primary-orange);
+            padding: 0.5rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background-color: var(--primary-orange);
+            color: var(--primary-black);
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px var(--border-glow);
+        }
+
+        .menu-item-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .menu-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-item:hover .menu-item-img img {
+            transform: scale(1.1);
+        }
+
+        .menu-item-content {
+            padding: 1.5rem;
+        }
+
+        .menu-item-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-orange);
+        }
+
+        .menu-item-desc {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .menu-item-price {
+            font-weight: 700;
+            color: var(--primary-red);
+            font-size: 1.2rem;
+        }
+
+        .menu-category {
+            margin-bottom: 4rem;
+        }
+        
+        .menu-item.hidden {
+            display: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        /* Animation for show/hide items */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(20px); }
+        }
+        
+        /* Styles for subcategory buttons */
+        .subcategory-view-more .btn {
+            background-color: var(--primary-orange);
+            font-size: 0.9rem;
+            padding: 0.6rem 1.2rem;
+        }
+        
+        .subcategory-view-more .btn:hover {
+            background-color: var(--primary-red);
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .menu-item.showing {
+            animation: fadeIn 0.5s ease forwards;
+            display: block;
+        }
+        
+        .menu-item.hiding {
+            animation: fadeOut 0.5s ease forwards;
+        }
+
+        .view-more {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* About Section */
+        .about-section {
+            background-color: rgba(30, 30, 30, 0.9);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background-color: var(--dark-bg);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-info {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 10px var(--border-glow);
+        }
+
+        .contact-info h3 {
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info i {
+            color: var(--primary-red);
+            margin-left: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .social-media-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-orange));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .social-link i {
+            margin-left: 0.8rem;
+            font-size: 1.1rem;
+            width: 20px;
+        }
+
+        .social-link.facebook:hover {
+            background: linear-gradient(135deg, #1877f2, #42a5f5);
+        }
+
+        .social-link.instagram:hover {
+            background: linear-gradient(135deg, #e4405f, #fd1d1d, #fcb045);
+        }
+
+        .social-link.twitter:hover {
+            background: linear-gradient(135deg, #1da1f2, #0d8bd9);
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo img {
+            height: 100px;
+        }
+
+        .social-links {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-black);
+            color: var(--text-light);
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-red);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+
+            .menu-items {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                background-color: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                width: 80%;
+                height: calc(100vh - 80px);
+                padding: 2rem;
+                transition: right 0.3s ease;
+            }
+
+            nav ul.active {
+                right: 0;
+            }
+
+            nav ul li {
+                margin: 1.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Font Import */
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="logo.png" alt="Machawi 5 Étoile Logo">
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul id="menu">
+                    <li><a href="#hero" class="active">الرئيسية</a></li>
+                    <li><a href="#menu">قائمة الطعام</a></li>
+                    <li><a href="#about">من نحن</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content fade-in">
+            <h1>مشاوي 5 إتوال</h1>
+            <p>أشهى المأكولات الشرقية والمشاوي بنكهة فريدة</p>
+            <a href="#menu" class="btn">استعرض القائمة</a>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <h2 class="fade-in">قائمة الطعام</h2>
+            <div class="menu-categories fade-in">
+                <button class="category-btn active" data-category="all">الكل</button>
+                <button class="category-btn" data-category="meat">اللحوم</button>
+                <button class="category-btn" data-category="appetizers">المقبلات</button>
+                <button class="category-btn" data-category="dishes">الأطباق</button>
+                <button class="category-btn" data-category="drinks">المشروبات</button>
+            </div>
+
+            <!-- اللحوم Category -->
+            <div class="menu-category fade-in" id="meat-category">
+                <h3>اللحوم</h3>
+                
+                <!-- بروشات Sub-category -->
+                <h4 style="color: var(--text-muted); margin-bottom: 1.5rem;">🔹 بروشات</h4>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات جناح دجاج مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات جناح دجاج مشوي</h4>
+                            <p class="menu-item-desc">قطع جناح دجاج طرية مشوية على الفحم</p>
+                            <p class="menu-item-price">10.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات سكالوب دجاج مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات سكالوب دجاج مشوي</h4>
+                            <p class="menu-item-desc">قطع سكالوب دجاج طرية مشوية على الفحم</p>
+                            <p class="menu-item-price">12.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات كباب مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات كباب مشوي</h4>
+                            <p class="menu-item-desc">كباب مشوي على الفحم مع التتبيلة الخاصة</p>
+                            <p class="menu-item-price">19.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1529694157872-4e0c0f3b238b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات كباب فستق مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات كباب فستق مشوي</h4>
+                            <p class="menu-item-desc">كباب بالفستق مشوي على الفحم</p>
+                            <p class="menu-item-price">21.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات كباب تركي مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات كباب تركي مشوي</h4>
+                            <p class="menu-item-desc">كباب تركي مشوي على الفحم</p>
+                            <p class="menu-item-price">22.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات لحم علوش مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات لحم علوش مشوي</h4>
+                            <p class="menu-item-desc">قطع لحم علوش طرية مشوية على الفحم</p>
+                            <p class="menu-item-price">21.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات كبدة علوش مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات كبدة علوش مشوي</h4>
+                            <p class="menu-item-desc">كبدة علوش مشوية على الفحم</p>
+                            <p class="menu-item-price">22.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات كبدة عجول مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات كبدة عجول مشوي</h4>
+                            <p class="menu-item-desc">كبدة عجول مشوية على الفحم</p>
+                            <p class="menu-item-price">19.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات (حبار/أخطبوط) مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات (حبار/أخطبوط) مشوي</h4>
+                            <p class="menu-item-desc">حبار وأخطبوط مشوي على الفحم</p>
+                            <p class="menu-item-price">29.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات (حبار/جمبري) مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات (حبار/جمبري) مشوي</h4>
+                            <p class="menu-item-desc">حبار وجمبري مشوي على الفحم</p>
+                            <p class="menu-item-price">27.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات جمبري مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات جمبري مشوي</h4>
+                            <p class="menu-item-desc">جمبري مشوي على الفحم</p>
+                            <p class="menu-item-price">28.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بروشات (جمبري/اخطبوط) مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بروشات (جمبري/اخطبوط) مشوي</h4>
+                            <p class="menu-item-desc">جمبري وأخطبوط مشوي على الفحم</p>
+                            <p class="menu-item-price">29.8 دت</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- وجبات فردية Sub-category -->
+                <h4 style="color: var(--text-muted); margin: 2rem 0 1.5rem;">🔹 وجبات فردية</h4>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="همبرغر مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">همبرغر مشوي</h4>
+                            <p class="menu-item-desc">برغر لحم مشوي مع الخضار الطازجة</p>
+                            <p class="menu-item-price">7.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="همبرغر فول سوداني مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">همبرغر فول سوداني مشوي</h4>
+                            <p class="menu-item-desc">برغر لحم مشوي مع الفول السوداني والخضار الطازجة</p>
+                            <p class="menu-item-price">7.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="سمان مشوي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">سمان مشوي</h4>
+                            <p class="menu-item-desc">سمان مشوي على الفحم</p>
+                            <p class="menu-item-price">5.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1611315764615-3e788573f31e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="فخذ دجاج">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">1 كلغ فخذ دجاج</h4>
+                            <p class="menu-item-desc">كيلو من فخذ الدجاج المشوي على الفحم</p>
+                            <p class="menu-item-price">19 دت</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أطباق بالكيلو Sub-category -->
+                <h4 style="color: var(--text-muted); margin: 2rem 0 1.5rem;">🔹 أطباق بالكيلو</h4>
+                <div class="menu-items" id="subcategory-kilograms">
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="لحم علوش مشوي 1 كلغ">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">1 كلغ لحم علوش مشوي</h4>
+                            <p class="menu-item-desc">كيلو من لحم العلوش المشوي على الفحم</p>
+                            <p class="menu-item-price">64.6 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1529694157872-4e0c0f3b238b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="مرقاز علوش 1 كلغ">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">1 كلغ مرقاز علوش</h4>
+                            <p class="menu-item-desc">كيلو من مرقاز العلوش المشوي</p>
+                            <p class="menu-item-price">53.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1529694157872-4e0c0f3b238b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="مرقاز علوش سبيسيال 1 كلغ">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">1 كلغ مرقاز علوش سبيسيال</h4>
+                            <p class="menu-item-desc">كيلو من مرقاز العلوش السبيسيال المشوي</p>
+                            <p class="menu-item-price">54.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="كبدة علوش 1 كلغ">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">1 كلغ كبدة علوش</h4>
+                            <p class="menu-item-desc">كيلو من كبدة العلوش المشوية</p>
+                            <p class="menu-item-price">70 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="كبدة بقري 1 كلغ">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">1 كلغ كبدة بقري</h4>
+                            <p class="menu-item-desc">كيلو من كبدة البقر المشوية</p>
+                            <p class="menu-item-price">55 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1529694157872-4e0c0f3b238b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="كوستيليات بقري 1 كلغ">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">1 كلغ كوستيليات بقري</h4>
+                            <p class="menu-item-desc">كيلو من كوستيليات البقر المشوية</p>
+                            <p class="menu-item-price">49.8 دت</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- زر عرض المزيد للقسم الرئيسي فقط -->
+                <div class="view-more main-category-view-more">
+                    <a href="#" class="btn show-more-btn" data-target="meat-category">عرض المزيد</a>
+                </div>
+            </div>
+
+            <!-- المقبلات Category -->
+            <div class="menu-category fade-in" id="appetizers-category">
+                <h3>🍞 المقبلات</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="خبز طابونة">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">خبز طابونة</h4>
+                            <p class="menu-item-desc">خبز طازج مخبوز على الطابون</p>
+                            <p class="menu-item-price">1 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1590739225287-bd31519780c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="هريسة + زيت الزينونة">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">هريسة + زيت الزينونة</h4>
+                            <p class="menu-item-desc">هريسة تقليدية مع زيت زيتون</p>
+                            <p class="menu-item-price">3.5 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1590739225287-bd31519780c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="هريسة عربي (هروس)">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">هريسة عربي (هروس)</h4>
+                            <p class="menu-item-desc">هريسة عربية تقليدية</p>
+                            <p class="menu-item-price">4.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بريك تقليدي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">بريك تقليدي</h4>
+                            <p class="menu-item-desc">بريك محشو بالبيض والبطاطس</p>
+                            <p class="menu-item-price">4.5 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1623238913973-21e285316eb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="صحن بطاطا + مايونيز">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">صحن بطاطا + مايونيز</h4>
+                            <p class="menu-item-desc">بطاطا مقلية مع صلصة المايونيز</p>
+                            <p class="menu-item-price">5.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1559058789-672da06263d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="سلاطة مشوية">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">سلاطة مشوية</h4>
+                            <p class="menu-item-desc">سلطة خضار مشوية</p>
+                            <p class="menu-item-price">5.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1577906096429-f73c2c312435?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="سلطة خضراء">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">سلطة خضراء</h4>
+                            <p class="menu-item-desc">سلطة من الخضروات الطازجة</p>
+                            <p class="menu-item-price">5.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="صحن حمص">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">صحن حمص</h4>
+                            <p class="menu-item-desc">حمص بالطحينة مع زيت الزيتون</p>
+                            <p class="menu-item-price">6.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1554502078-ef0fc409efce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="صحن مقلي">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">صحن مقلي</h4>
+                            <p class="menu-item-desc">تشكيلة من المقبلات المقلية</p>
+                            <p class="menu-item-price">7.8 دت</p>
+                        </div>
+                    </div>
+                    <div class="menu-item hidden-item">
+                        <div class="menu-item-img">
+                            <img src="https://images.unsplash.com/photo-1559058789-672da06263d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="سلطة سيزار">
+                        </div>
+                        <div class="menu-item-content">
+                            <h4 class="menu-item-title">سلطة سيزار</h4>
+                            <p class="menu-item-desc">سلطة سيزار مع الدجاج والخبز المحمص</p>
+                            <p class="menu-item-price">16.8 دت</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="view-more">
+                    <a href="#" class="btn show-more-btn" data-target="appetizers-category">عرض المزيد</a>
+                </div>
+            </div>
+
+            <!-- الأطباق Category -->
+            <div class="menu-category fade-in" id="dishes-category">
+                <h3>🍲 الأطباق</h3>
+                
+                <!-- الدجاج Sub-category -->
+                <div class="sub-category">
+                    <h4>🔸 الدجاج</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="اسكالوب مشوي">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">اسكالوب مشوي</h4>
+                                <p class="menu-item-desc">اسكالوب دجاج مشوي مع التوابل</p>
+                                <p class="menu-item-price">22.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1604908554105-088645ba1575?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="قطع دجاج">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">قطع دجاج</h4>
+                                <p class="menu-item-desc">قطع دجاج مشوية</p>
+                                <p class="menu-item-price">22.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="إسكالوب مبطن">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">إسكالوب مبطن</h4>
+                                <p class="menu-item-desc">اسكالوب دجاج مبطن</p>
+                                <p class="menu-item-price">22.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="اسكالوب مبطن">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">اسكالوب مبطن</h4>
+                                <p class="menu-item-desc">اسكالوب دجاج مبطن بطريقة خاصة</p>
+                                <p class="menu-item-price">23.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- المأكولات البحرية Sub-category -->
+                <div class="sub-category">
+                    <h4>🔸 المأكولات البحرية</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1559737558-2f5a35f4523b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="كلمار">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">كلمار</h4>
+                                <p class="menu-item-desc">كلمار طازج محضر بطريقة خاصة</p>
+                                <p class="menu-item-price">25.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1551248429-40975aa4de74?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="سمك وراطة مشوي">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">سمك وراطة مشوي</h4>
+                                <p class="menu-item-desc">سمك وراطة طازج مشوي</p>
+                                <p class="menu-item-price">25.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1551248429-40975aa4de74?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="سمك قاروص مشوي">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">سمك قاروص مشوي</h4>
+                                <p class="menu-item-desc">سمك قاروص طازج مشوي</p>
+                                <p class="menu-item-price">25.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item hidden-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="غلال البحر مبطن">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">غلال البحر مبطن</h4>
+                                <p class="menu-item-desc">تشكيلة من المأكولات البحرية المبطنة</p>
+                                <p class="menu-item-price">38.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item hidden-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="الروبيان والحبار والحبار">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">الروبيان والحبار والحبار</h4>
+                                <p class="menu-item-desc">تشكيلة من الروبيان والحبار</p>
+                                <p class="menu-item-price">39.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- خروف Sub-category -->
+                <div class="sub-category">
+                    <h4>🔸 خروف</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="نصف رأس خروف">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">نصف رأس خروف</h4>
+                                <p class="menu-item-desc">نصف رأس خروف مطهو بطريقة تقليدية</p>
+                                <p class="menu-item-price">24.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="موزة خروف مصلي">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">موزة خروف مصلي</h4>
+                                <p class="menu-item-desc">موزة خروف مصلي مع الأرز والمكسرات</p>
+                                <p class="menu-item-price">38.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- معجنات Sub-category -->
+                <div class="sub-category">
+                    <h4>🔸 معجنات</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="تالياتيلي بالدجاج مع صلصة الشمبنيون">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">تالياتيلي بالدجاج مع صلصة الشمبنيون</h4>
+                                <p class="menu-item-desc">معكرونة تالياتيلي مع الدجاج وصلصة الفطر</p>
+                                <p class="menu-item-price">24.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item hidden-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بستو بالجمبري">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">بستو بالجمبري</h4>
+                                <p class="menu-item-desc">معكرونة مع صلصة البستو والجمبري</p>
+                                <p class="menu-item-price">31.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item hidden-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="سباقيتي بفلال البحر">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">سباقيتي بفلال البحر</h4>
+                                <p class="menu-item-desc">سباغيتي مع تشكيلة من المأكولات البحرية</p>
+                                <p class="menu-item-price">39.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item hidden-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="مقرونة بغلال البحر على الطريقة الإيطالية">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">مقرونة بغلال البحر على الطريقة الإيطالية</h4>
+                                <p class="menu-item-desc">معكرونة إيطالية مع تشكيلة من المأكولات البحرية</p>
+                                <p class="menu-item-price">39.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- خروف 5 نجوم Sub-category -->
+                <div class="sub-category">
+                    <h4>🔸 خروف 5 نجوم</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="نصف رأس خروف">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">نصف رأس خروف</h4>
+                                <p class="menu-item-desc">نصف رأس خروف محضر بطريقة خاصة</p>
+                                <p class="menu-item-price">24.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="view-more">
+                    <a href="#" class="btn show-more-btn" data-target="dishes-category">عرض المزيد</a>
+                </div>
+            </div>
+
+            <!-- المشروبات Category -->
+            <div class="menu-category fade-in" id="drinks-category">
+                <h3>المشروبات</h3>
+                
+                <!-- المشروبات الطازجة Sub-category -->
+                <div class="sub-category">
+                    <h4>المشروبات الطازجة</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1523362628745-0c100150b504?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="الماء 0.5 لتر">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">الماء 0.5 لتر</h4>
+                                <p class="menu-item-desc">مياه معدنية نقية</p>
+                                <p class="menu-item-price">1.7 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="الماء 1 لتر">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">الماء 1 لتر</h4>
+                                <p class="menu-item-desc">مياه معدنية نقية</p>
+                                <p class="menu-item-price">3.5 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1581006852262-e4307cf6283a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="ماء غازي">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">ماء غازي</h4>
+                                <p class="menu-item-desc">مياه فوارة منعشة</p>
+                                <p class="menu-item-price">4 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1596803244618-8dbee441d70b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="الصودا">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">الصودا</h4>
+                                <p class="menu-item-desc">مشروب غازي منعش</p>
+                                <p class="menu-item-price">3.5 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1596803244618-8dbee441d70b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="الصودا (النعناع والغرينادين)">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">الصودا (النعناع والغرينادين)</h4>
+                                <p class="menu-item-desc">مشروب غازي بنكهة النعناع والغرينادين</p>
+                                <p class="menu-item-price">4.5 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="جواجم">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">جواجم</h4>
+                                <p class="menu-item-desc">مشروب منعش</p>
+                                <p class="menu-item-price">12.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="جواجم مثلجة">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">جواجم مثلجة</h4>
+                                <p class="menu-item-desc">مشروب منعش مع الثلج</p>
+                                <p class="menu-item-price">16.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- عصير Sub-category -->
+                <div class="sub-category">
+                    <h4>عصير</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="عصير الليمون">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">عصير الليمون</h4>
+                                <p class="menu-item-desc">عصير ليمون طازج ومنعش</p>
+                                <p class="menu-item-price">7.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1556679343-c1c1c9308e4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="عصير برتقال">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">عصير برتقال</h4>
+                                <p class="menu-item-desc">عصير برتقال طازج</p>
+                                <p class="menu-item-price">7.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1502741224143-90386d7f8c82?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="الفراولة">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">الفراولة</h4>
+                                <p class="menu-item-desc">عصير فراولة طازج</p>
+                                <p class="menu-item-price">8.5 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1557800636-894a64c1696f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="عصير الموز">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">عصير الموز</h4>
+                                <p class="menu-item-desc">عصير موز طازج</p>
+                                <p class="menu-item-price">8.5 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1546173159-315724a31696?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="عصير الحمضيات">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">عصير الحمضيات</h4>
+                                <p class="menu-item-desc">مزيج من عصائر الحمضيات الطازجة</p>
+                                <p class="menu-item-price">8.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="كوكتيل">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">كوكتيل</h4>
+                                <p class="menu-item-desc">مزيج من العصائر الطازجة</p>
+                                <p class="menu-item-price">9.5 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="عصير الليمون باللوز">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">عصير الليمون باللوز</h4>
+                                <p class="menu-item-desc">عصير ليمون طازج مع اللوز</p>
+                                <p class="menu-item-price">10.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="عصير خمس نجوم">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">عصير خمس نجوم</h4>
+                                <p class="menu-item-desc">عصير مميز من مطعمنا</p>
+                                <p class="menu-item-price">10.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- سموثي Sub-category -->
+                <div class="sub-category">
+                    <h4>سموثي</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1553530666-ba11a90a0868?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="موز شوكولاتة">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">موز شوكولاتة</h4>
+                                <p class="menu-item-desc">سموثي موز بالشوكولاتة</p>
+                                <p class="menu-item-price">11.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1553530666-ba11a90a0868?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="اكزوتيك">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">اكزوتيك</h4>
+                                <p class="menu-item-desc">سموثي بنكهات استوائية</p>
+                                <p class="menu-item-price">11.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1553530666-ba11a90a0868?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بينا كولادا">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">بينا كولادا</h4>
+                                <p class="menu-item-desc">سموثي بنكهة جوز الهند والأناناس</p>
+                                <p class="menu-item-price">11.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1502741224143-90386d7f8c82?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="الفراولة">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">الفراولة</h4>
+                                <p class="menu-item-desc">سموثي فراولة طازج</p>
+                                <p class="menu-item-price">13.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- مخفوق الحليب Sub-category -->
+                <div class="sub-category">
+                    <h4>مخفوق الحليب</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="كراميل فانيليا">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">كراميل فانيليا</h4>
+                                <p class="menu-item-desc">مخفوق حليب بنكهة الكراميل والفانيليا</p>
+                                <p class="menu-item-price">13.5 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="نوتيلا">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">نوتيلا</h4>
+                                <p class="menu-item-desc">مخفوق حليب بالنوتيلا</p>
+                                <p class="menu-item-price">15.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="أوريو">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">أوريو</h4>
+                                <p class="menu-item-desc">مخفوق حليب بالأوريو</p>
+                                <p class="menu-item-price">15.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- قهوة ساخنة Sub-category -->
+                <div class="sub-category">
+                    <h4>قهوة ساخنة</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572286258217-215cf8e8e48e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="قهوة">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">قهوة</h4>
+                                <p class="menu-item-desc">قهوة عربية تقليدية</p>
+                                <p class="menu-item-price">3 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572286258217-215cf8e8e48e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="قهوة حليب">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">قهوة حليب</h4>
+                                <p class="menu-item-desc">قهوة مع الحليب</p>
+                                <p class="menu-item-price">3.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572286258217-215cf8e8e48e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="قهوة بالكريمة">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">قهوة بالكريمة</h4>
+                                <p class="menu-item-desc">قهوة مع الكريمة</p>
+                                <p class="menu-item-price">4.7 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572286258217-215cf8e8e48e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="القهوة الأمريكية">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">القهوة الأمريكية</h4>
+                                <p class="menu-item-desc">قهوة أمريكية</p>
+                                <p class="menu-item-price">4.5 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572286258217-215cf8e8e48e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="شوكولاطة الحليب">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">شوكولاطة الحليب</h4>
+                                <p class="menu-item-desc">مشروب شوكولاتة ساخن</p>
+                                <p class="menu-item-price">5.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572286258217-215cf8e8e48e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="قهوة كريمة خاصة">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">قهوة كريمة خاصة</h4>
+                                <p class="menu-item-desc">قهوة مميزة مع كريمة خاصة</p>
+                                <p class="menu-item-price">6.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572286258217-215cf8e8e48e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="كابتشينو">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">كابتشينو</h4>
+                                <p class="menu-item-desc">كابتشينو إيطالي</p>
+                                <p class="menu-item-price">7.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1572286258217-215cf8e8e48e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="قهوة لييج">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">قهوة لييج</h4>
+                                <p class="menu-item-desc">قهوة لييج بلجيكية</p>
+                                <p class="menu-item-price">8.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- شاي Sub-category -->
+                <div class="sub-category">
+                    <h4>شاي</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="شاي أخضر">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">شاي أخضر</h4>
+                                <p class="menu-item-desc">شاي أخضر صحي</p>
+                                <p class="menu-item-price">3 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="شاي اللوز">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">شاي اللوز</h4>
+                                <p class="menu-item-desc">شاي بنكهة اللوز</p>
+                                <p class="menu-item-price">7.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="شاي الصنوبر">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">شاي الصنوبر</h4>
+                                <p class="menu-item-desc">شاي بنكهة الصنوبر</p>
+                                <p class="menu-item-price">9 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- موخيتو Sub-category -->
+                <div class="sub-category">
+                    <h4>موخيتو</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="موخيتو فيرجن">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">موخيتو فيرجن</h4>
+                                <p class="menu-item-desc">موخيتو بدون كحول</p>
+                                <p class="menu-item-price">9.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="بينا كولادا">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">بينا كولادا</h4>
+                                <p class="menu-item-desc">موخيتو بنكهة جوز الهند والأناناس</p>
+                                <p class="menu-item-price">10.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="موخيتو أزرق">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">موخيتو أزرق</h4>
+                                <p class="menu-item-desc">موخيتو بلون أزرق مميز</p>
+                                <p class="menu-item-price">10.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="الفراولة">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">الفراولة</h4>
+                                <p class="menu-item-desc">موخيتو بنكهة الفراولة</p>
+                                <p class="menu-item-price">10.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="عصير الليمون المجمد">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">عصير الليمون المجمد</h4>
+                                <p class="menu-item-desc">عصير ليمون مثلج منعش</p>
+                                <p class="menu-item-price">14.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- حلوى Sub-category -->
+                <div class="sub-category">
+                    <h4>حلوى</h4>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="آيس كريم ليمون">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">آيس كريم ليمون</h4>
+                                <p class="menu-item-desc">آيس كريم بنكهة الليمون المنعش</p>
+                                <p class="menu-item-price">7.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="2 آيس كريم">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">2 آيس كريم</h4>
+                                <p class="menu-item-desc">طبق من 2 كرات آيس كريم</p>
+                                <p class="menu-item-price">7.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="الآيس كريم 3">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">الآيس كريم 3</h4>
+                                <p class="menu-item-desc">طبق من 3 كرات آيس كريم</p>
+                                <p class="menu-item-price">10.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1478144592103-25e218a04891?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="طبق فاكهة">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">طبق فاكهة</h4>
+                                <p class="menu-item-desc">تشكيلة من الفواكه الطازجة</p>
+                                <p class="menu-item-price">19.8 دت</p>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-img">
+                                <img src="https://images.unsplash.com/photo-1478144592103-25e218a04891?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="طبق فاكهة 5 نجوم">
+                            </div>
+                            <div class="menu-item-content">
+                                <h4 class="menu-item-title">طبق فاكهة 5 نجوم</h4>
+                                <p class="menu-item-desc">تشكيلة فاخرة من الفواكه الطازجة</p>
+                                <p class="menu-item-price">37.8 دت</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="view-more">
+                    <a href="#" class="btn show-more-btn" data-target="drinks-category">عرض المزيد</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="fade-in">من نحن</h2>
+            <div class="about-content fade-in">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="مطعم مشاوي 5 إتوال">
+                </div>
+                <div class="about-text">
+                    <p>مطعم مشاوي 5 إتوال هو وجهتك المثالية لتذوق أشهى المأكولات الشرقية والمشاوي بنكهة فريدة ومميزة.</p>
+                    <p>نحن نقدم تجربة طعام فريدة من نوعها، حيث نجمع بين الأصالة والحداثة في أطباقنا. نستخدم أجود أنواع اللحوم والمكونات الطازجة لضمان تقديم وجبات ذات جودة عالية.</p>
+                    <p>تأسس مطعمنا منذ أكثر من 10 سنوات، وأصبح من أشهر المطاعم في المنطقة بفضل جودة الطعام وخدمة الزبائن المميزة.</p>
+                    <p>نحن نؤمن بأن الطعام الجيد يجمع الناس معًا، ولذلك نحرص على توفير أجواء مريحة وودية لجميع زبائننا.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="fade-in">اتصل بنا</h2>
+            <div class="contact-content fade-in">
+                <div class="contact-info">
+                    <h3><i class="fas fa-map-marker-alt"></i> Address</h3>
+                    <p>Route de Bizerte, Km24 Chorfech Ariana</p>
+                </div>
+                <div class="contact-info">
+                    <h3><i class="fas fa-phone"></i>Reservations</h3>
+                    <p>+216 24 887 610</p>
+                    <p>+216 56 020 406</p>
+                </div>
+                <div class="contact-info">
+                    <h3><i class="fas fa-share-alt"></i>Follow us</h3>
+                    <div class="social-media-links">
+                        <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="#" class="social-link twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="logo.jpg" alt="Machawi 5 Étoile Logo">
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+                <p class="copyright">© 2023 مشاوي 5 إتوال. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const menu = document.querySelector('#menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Active Navigation Link
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav ul li a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll Animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const fadeIn = () => {
+            fadeElements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', fadeIn);
+        window.addEventListener('load', fadeIn);
+
+        // Menu Category Filter
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const menuCategories = document.querySelectorAll('.menu-category');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                categoryBtns.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const category = btn.dataset.category;
+
+                // Show/hide menu categories based on selected category
+                if (category === 'all') {
+                    menuCategories.forEach(cat => cat.style.display = 'block');
+                } else {
+                    menuCategories.forEach(cat => {
+                        if (cat.id === `${category}-category`) {
+                            cat.style.display = 'block';
+                        } else {
+                            cat.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+
+        // Show More Button Functionality
+        const showMoreBtns = document.querySelectorAll('.show-more-btn');
+        
+        showMoreBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetCategory = btn.dataset.target;
+                const categorySection = document.getElementById(targetCategory);
+                const hiddenItems = categorySection.querySelectorAll('.menu-item.hidden');
+                
+                // Toggle hidden items visibility
+                if (btn.textContent.includes('عرض المزيد')) {
+                    // Show more - remove hidden class with animation
+                    hiddenItems.forEach(item => {
+                        item.classList.add('showing');
+                        setTimeout(() => {
+                            item.classList.remove('hidden');
+                            item.classList.remove('showing');
+                        }, 50);
+                    });
+                } else {
+                    // Show less - add hidden class to items beyond the first 6
+                    const allItems = categorySection.querySelectorAll('.menu-item');
+                    const directItems = Array.from(allItems).filter(item => {
+                        // Check if this item is not within a subcategory's menu-items div
+                        const parentMenuItems = item.closest('.menu-items');
+                        const isInSubcategory = parentMenuItems && 
+                                              parentMenuItems.previousElementSibling && 
+                                              parentMenuItems.previousElementSibling.tagName === 'H4';
+                        return !isInSubcategory;
+                    });
+                    
+                    // Apply hiding animation and then hide
+                    directItems.forEach((item, index) => {
+                        if (index >= 6) {
+                            item.classList.add('hiding');
+                            setTimeout(() => {
+                                item.classList.add('hidden');
+                                item.classList.remove('hiding');
+                            }, 450);
+                        }
+                    });
+                    
+                    // Scroll to the category header
+                    const categoryHeader = categorySection.querySelector('h3');
+                    if (categoryHeader) {
+                        setTimeout(() => {
+                            categoryHeader.scrollIntoView({ behavior: 'smooth' });
+                        }, 100);
+                    }
+                }
+                
+                // Toggle button text
+                if (btn.textContent.includes('عرض المزيد')) {
+                    btn.textContent = 'عرض أقل';
+                } else {
+                    btn.textContent = 'عرض المزيد';
+                }
+            });
+        });
+        
+        // Add show more/less buttons for each subcategory
+        function addSubcategoryShowMoreButtons() {
+            // Find all subcategory headers (h4 elements with the specific style)
+            const subcategoryHeaders = document.querySelectorAll('h4[style*="color: var(--text-muted)"]');
+            
+            subcategoryHeaders.forEach((header, index) => {
+                // Get the next menu-items div after this header
+                const menuItemsDiv = header.nextElementSibling;
+                if (menuItemsDiv && menuItemsDiv.classList.contains('menu-items')) {
+                    // Skip if this is the أطباق بالكيلو subcategory which already has a specific ID
+                    if (menuItemsDiv.id === 'subcategory-kilograms') {
+                        return;
+                    }
+                    
+                    const items = menuItemsDiv.querySelectorAll('.menu-item');
+                    
+                    // Only add button if there are more than 3 items
+                    if (items.length > 3) {
+                        // Hide items beyond the first 3
+                        items.forEach((item, idx) => {
+                            if (idx >= 3) {
+                                item.classList.add('hidden');
+                            }
+                        });
+                        
+                        // Create a view-more div with a button
+                        const viewMoreDiv = document.createElement('div');
+                        viewMoreDiv.className = 'view-more';
+                        
+                        const showMoreBtn = document.createElement('a');
+                        showMoreBtn.href = '#';
+                        showMoreBtn.className = 'btn show-more-btn';
+                        showMoreBtn.dataset.target = `subcategory-${index}`;
+                        showMoreBtn.textContent = 'عرض المزيد';
+                        
+                        // Add ID to the menu-items div for targeting
+                        menuItemsDiv.id = `subcategory-${index}`;
+                        
+                        // Add click event to the button
+                        showMoreBtn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const hiddenItems = menuItemsDiv.querySelectorAll('.menu-item.hidden');
+                            
+                            // Toggle hidden items visibility
+                            if (showMoreBtn.textContent.includes('عرض المزيد')) {
+                                // Show more - remove hidden class with animation
+                                hiddenItems.forEach(item => {
+                                    item.classList.add('showing');
+                                    setTimeout(() => {
+                                        item.classList.remove('hidden');
+                                        item.classList.remove('showing');
+                                    }, 50);
+                                });
+                            } else {
+                                // Show less - add hidden class to items beyond the first 3
+                                const allItems = menuItemsDiv.querySelectorAll('.menu-item');
+                                allItems.forEach((item, idx) => {
+                                    if (idx >= 3) {
+                                        item.classList.add('hiding');
+                                        setTimeout(() => {
+                                            item.classList.add('hidden');
+                                            item.classList.remove('hiding');
+                                        }, 450);
+                                    }
+                                });
+                                
+                                // Scroll to the subcategory header
+                                setTimeout(() => {
+                                    header.scrollIntoView({ behavior: 'smooth' });
+                                }, 100);
+                            }
+                            
+                            // Toggle button text
+                            if (showMoreBtn.textContent.includes('عرض المزيد')) {
+                                showMoreBtn.textContent = 'عرض أقل';
+                            } else {
+                                showMoreBtn.textContent = 'عرض المزيد';
+                            }
+                        });
+                        
+                        viewMoreDiv.appendChild(showMoreBtn);
+                        menuItemsDiv.after(viewMoreDiv);
+                    }
+                }
+            });
+        }
+        
+        // Initially hide items beyond the first 6 in each main category
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuCategories = document.querySelectorAll('.menu-category');
+            
+            menuCategories.forEach(category => {
+                // For main categories, we'll only count items that are direct children
+                // and not within subcategories
+                const directItems = Array.from(category.querySelectorAll('.menu-item')).filter(item => {
+                    // Check if this item is not within a subcategory's menu-items div
+                    const parentMenuItems = item.closest('.menu-items');
+                    const isInSubcategory = parentMenuItems && 
+                                          parentMenuItems.previousElementSibling && 
+                                          parentMenuItems.previousElementSibling.tagName === 'H4';
+                    return !isInSubcategory;
+                });
+                
+                // Hide items beyond the first 6 in main categories
+                directItems.forEach((item, index) => {
+                    if (index >= 6) {
+                        item.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Add show more buttons for subcategories
+            addSubcategoryShowMoreButtons();
+        });
+        
+    </script>
+</body>
+</html>
